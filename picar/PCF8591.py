@@ -26,6 +26,7 @@ class PCF8591(object):
     RPI_REVISION_2_MODULE_B  = ["a01041", "a21041"]
     RPI_REVISION_3_MODULE_B  = ["a02082", "a22082"]
     RPI_REVISION_3_MODULE_BP = ["a020d3"]
+    RPI_REVISION_4_MODULE_B  = ["c03111", "c03112"]
 
     def __init__(self, address=0x48, bus_number=1):
         self.address = address
@@ -68,6 +69,8 @@ class PCF8591(object):
             return 1
         elif pi_revision == '3 Module B+':
             return 1
+        elif pi_revision == '4 Module B':
+            return 1
 
     def _get_pi_revision(self):
         "Gets the version number of the Raspberry Pi board"
@@ -94,6 +97,8 @@ class PCF8591(object):
                         return '3 Module B'
                     elif line[11:-1] in self.RPI_REVISION_3_MODULE_BP:
                         return '3 Module B+'
+                    elif line[11:-1] in self.RPI_REVISION_4_MODULE_B:
+                        return '4 Module B'
                     else:
                         print("Error. Pi revision didn't recognize, module number: %s" % line[11:-1])
                         print('Exiting...')
